@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sin(3x) Point Calculator</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 480px; margin: 40px auto; padding: 20px; background: #f4f6f8; }
+    .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    h2 { margin-top: 0; color: #2c3e50; }
+    label { font-weight: bold; }
+    input[type="number"], select { width: 100%; padding: 10px; margin: 10px 0 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+    button { width: 100%; padding: 12px; background: #27ae60; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; }
+    button:hover { background: #219150; }
+    .result { margin-top: 20px; padding: 15px; background: #eafaf1; border-left: 5px solid #27ae60; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Sin(3x) Point Calculator</h2>
+    <p>Equation: <code>y = sin(3x)</code></p>
+    
+    <label for="xVal">Enter x value:</label>
+    <input type="number" id="xVal" step="any" placeholder="e.g. 0.5 or 30">
+
+    <label for="mode">Angle Mode:</label>
+    <select id="mode">
+      <option value="rad">Radians (default)</option>
+      <option value="deg">Degrees (°)</option>
+    </select>
+    
+    <button onclick="calculate()">Calculate Y Value</button>
+
+    <div id="output" class="result">
+      <em>Ready to calculate. Enter any x value above!</em>
+    </div>
+  </div>
+
+  <script>
+    function calculate() {
+      let xInput = document.getElementById("xVal").value;
+      let mode = document.getElementById("mode").value;
+      
+      if (xInput === "") {
+        document.getElementById("output").innerHTML = "<b style='color:red;'>Please enter an x value!</b>";
+        return;
+      }
+
+      let x = parseFloat(xInput);
+      let angle = 3 * x;
+      
+      // If user inputs degrees, convert to radians for Math.sin()
+      if (mode === "deg") {
+        angle = angle * (Math.PI / 180);
+      }
+
+      let y = Math.sin(angle);
+
+      document.getElementById("output").innerHTML = `
+        <strong>Last Result:</strong><br><br>
+        <b>Input x =</b> ${x} ${mode === 'deg' ? '°' : 'rad'}<br>
+        <b>Calculated y =</b> ${y}<br>
+        <b>4-Decimal y =</b> ${y.toFixed(4)}<br><br>
+        <b>Coordinate:</b> (${x}, ${y.toFixed(4)})
+      `;
+    }
+  </script>
+</body>
+</html>
